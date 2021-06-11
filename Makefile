@@ -6,6 +6,10 @@ format:
 check-import:
 	bin/check-import.sh
 
+.PHONY: cleanlintcache
+cleanlintcache:
+	golangci-lint cache clean
+
 .PHONY: lint
 lint: cleanlintcache
 	golangci-lint run ./...
