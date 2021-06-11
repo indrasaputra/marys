@@ -1,0 +1,30 @@
+name: Test
+
+on: [push, pull_request]
+  
+jobs:
+  code-linter:
+    name: Lint all codes
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository 
+        uses: actions/checkout@v2
+      - name: Lint using golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.38.0
+
+  import-linter:
+    name: Lint import block
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    container:
+      image: indrasaputra/protogen:0.0.1
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Check import blocks
+        run: |
+          make format
+          make check-import
