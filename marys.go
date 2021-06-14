@@ -83,8 +83,8 @@ func init() {
 // ReceiveNotification receives notification.
 func ReceiveNotification(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		_, _ = w.Write([]byte(`{"error": "only allow POST"}`))
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`Only POST will be processed. Otherwise, it returns status OK`))
 		return
 	}
 
