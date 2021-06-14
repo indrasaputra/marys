@@ -15,6 +15,7 @@ import (
 )
 
 const (
+	timeout  = 5 * time.Second
 	tmplName = "Notification"
 	tmpl     = `
 Dari: {{.Sender}}
@@ -69,7 +70,7 @@ func init() {
 	messageTemplate = template.Must(template.New(tmplName).Parse(tmpl))
 
 	client := &http.Client{
-		Timeout: 5 * time.Second,
+		Timeout: timeout,
 	}
 
 	bot = &TelegramBot{
@@ -102,11 +103,11 @@ func ReceiveNotification(w http.ResponseWriter, r *http.Request) {
 
 	if err := sendNotifToTelegram(&notif); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
+		_, _ = w.Write([]byte(err.Error()))
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`Success`))
+	_, _ = w.Write([]byte(`Success`))
 }
 
 func sendNotifToTelegram(notif *Notification) error {
