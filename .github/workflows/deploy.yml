@@ -1,4 +1,4 @@
-name: Test
+name: Deploy
 
 on: [push, pull_request]
   
@@ -47,3 +47,5 @@ jobs:
           credentials: ${{ secrets.GCP_CREDENTIALS }}
           entry_point: ReceiveNotification
           env_vars: TELEGRAM_RECIPIENT_ID=${{ secrets.TELEGRAM_RECIPIENT_ID }},TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }},TELEGRAM_URL=${{ secrets.TELEGRAM_URL }}
+      - name: Verify deployment
+        run: curl "${{ steps.deployment.outputs.url }}"
