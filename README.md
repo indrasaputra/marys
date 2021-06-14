@@ -11,3 +11,35 @@ Its main purpose is currently as a notifier service for my personal projects.
 ## Owner
 
 [Indra Saputra](https://github.com/indrasaputra)
+
+## Usage
+
+Send a POST request to the Marys endpoint. For example, the endpoint is `http://localhost:8080/notifications`, then send this JSON to the endpoint:
+
+```json
+{
+    "sender": "Indra",
+    "message": "Service X has been down for the last 5 minutes"
+}
+```
+
+`sender` and `message` are required.
+
+## How to Run
+
+Since this project depends on Telegram, so we need to get ChatID (it can be channel, group, or personal message).
+
+This repository also provides `main.go` that can be run in development.
+
+```
+$ TELEGRAM_RECIPIENT_ID=<chat-id> \
+  TELEGRAM_TOKEN=<telegram-bot-token> \
+  TELEGRAM_URL=https://api.telegram.org/bot \
+  PORT=8080 \
+  go run cmd/api/main.go
+```
+
+## Deployment
+
+Currently, this project is deployed in [Google Cloud Functions](https://cloud.google.com/functions).
+The deployment process definiton is stated and ruled in [Github Actions](.github/workflows/deploy.yml).
